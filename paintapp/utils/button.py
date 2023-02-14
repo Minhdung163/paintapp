@@ -1,6 +1,6 @@
 from .settings import *
 
-class Button: # Class contains everything we need for the buttons
+class Button: #Class contains everything we need for the buttons
     def __init__(self, x, y, width, height, color, text=None, text_color = BLACK):
         self.x = x
         self.y = y

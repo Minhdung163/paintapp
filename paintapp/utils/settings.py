@@ -8,7 +8,7 @@ RED = (255,0,0)
 BLUE = (0,255,0)
 GREEN = (0,0,255)
 
-FPS = 240 # Set the fps of the game, 
+FPS = 500 # Set the fps of the game, 
 
 WIDTH = 800
 HEIGHT = 1000
@@ -37,3 +37,12 @@ IS_WHITE = False
 
 def get_font(size):
     return pygame.font.SysFont("Helvetica", size)
+
+def get_row_col_from_pos(pos): #Get the pos of the mouse function
+    x, y = pos
+    row = y // PIXEL_SIZE #This rounds the position the match the index of the grid
+    col = x // PIXEL_SIZE
+    if row >= ROWS:
+        raise IndexError #An exception in python occurs when we try to access an out-of-range element from a list so that we can detect when we click outside of the grid's area 
+    return row, col
+

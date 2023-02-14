@@ -1,62 +1,6 @@
 from utils import * #Import everything from utils folder
+from drawing import *
 
-WIN = pygame.display.set_mode((WIDTH,HEIGHT)) #Create the window with given width and height from the settings
-pygame.display.set_caption("Paint") #And set the caption for it
-
-def init_grid(rows,cols,color): #Create the grid for your painting app
-    grid = [] #Create the list
-    for i in range(rows): #For loop to insert the values into the grid
-        grid.append([]) #Insert rows
-        for _ in range(cols):
-            grid[i].append(color) #Insert cols with a color variable
-    return grid #This function return a list with a form of matrix in it
-
-def draw_grid(win, grid): #Function to draw the grid as we've already created a grid
-    for i, row in enumerate(grid): #for loop using enumerate, which gives you back 2 variables: i for count and row stands for what is inside that index
-        for j, pixel in enumerate(row): 
-            pygame.draw.rect(win, pixel, (j * PIXEL_SIZE, i * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE)) #Draw a square with each pixels in the grid
-
-    if DRAW_GRID_LINES: #using bool data type to decides whether you want to draw grid lines or not 
-        for i in range(ROWS + 1): #Add one more line to look good
-            pygame.draw.line(win, BLACK,(0,i*PIXEL_SIZE),(WIDTH,i*PIXEL_SIZE)) #Draw the grid lines vertically
-        for i in range(COLS + 1): 
-            pygame.draw.line(win, BLACK,(i*PIXEL_SIZE,0),(i*PIXEL_SIZE,HEIGHT - TOOLBAR_HEIGHT)) #Draw the grid lines horizontally
-
-def draw(win, grid, buttons): #Draw function
-    win.fill(BG_COLOR)
-    draw_grid(win, grid)
-    for button in buttons: #For loop to draw all of the buttons 
-        button.draw(win)
-    pygame.display.update()
-
-def get_row_col_from_pos(pos): #Get the pos of the mouse function
-    x, y = pos
-    row = y // PIXEL_SIZE #This rounds the position the match the index of the grid
-    col = x // PIXEL_SIZE
-    if row >= ROWS:
-        raise IndexError #An exception in python occurs when we try to access an out-of-range element from a list so that we can detect when we click outside of the grid's area 
-    return row, col
-
-run = True
-clock = pygame.time.Clock()
-grid = init_grid(ROWS,COLS,BG_COLOR) #Create the grid with given rows, cols, and color from the settings
-drawing_color = BLACK 
-# Positions y to place to buttons
-button_y1 =HEIGHT - TOOLBAR_HEIGHT*3/4 - 25 
-button_y2 = HEIGHT - TOOLBAR_HEIGHT/4 - 25
-buttons = [
-    Button(10, button_y1, 50, 50, BLACK),
-    Button(120, button_y1, 50, 50, RED),
-    Button(230, button_y1, 50, 50, GREEN),
-    Button(340, button_y1, 50, 50, BLUE),
-    Button(450, button_y1, 50, 50, WHITE, "Erase", BLACK),
-    Button(560, button_y1, 50, 50, WHITE, "Clear", BLACK),
-    Button(10, button_y2, 50, 50, WHITE, "1px", BLACK),
-    Button(120, button_y2, 50, 50, WHITE, "3px", BLACK),
-    Button(230, button_y2, 50, 50, WHITE, "5px", BLACK),
-    Button(340, button_y2, 50, 50, WHITE, "7px", BLACK),
-    Button(450, button_y2, 50, 50, WHITE, "9px", BLACK)   
-]# Initialize the buttons
 while run: # while loop for the game
     clock.tick(FPS)
     for event in pygame.event.get():
